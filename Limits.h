@@ -3,23 +3,22 @@
 
 #include <list>
 
-class Element;
-class Cluster;
+#include "Types.h"
 
 struct Limits
 {
-    Element *min_r;
-    Element *min_g;
-    Element *min_b;
+    ElementPtrT min_r;
+    ElementPtrT min_g;
+    ElementPtrT min_b;
 
-    Element *max_r;
-    Element *max_g;
-    Element *max_b;
+    ElementPtrT max_r;
+    ElementPtrT max_g;
+    ElementPtrT max_b;
 
-    void update(Element *el);
-    void update(const Cluster *cluster);
+    void update(ElementPtrT el);
+    void update(ClusterPtrT cluster);
 
-    std::list<Element*> all() const;
+    std::list<ElementPtrT> all() const;
 };
 
 

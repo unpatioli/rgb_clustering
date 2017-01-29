@@ -26,7 +26,7 @@ void Processor::clusterize()
             auto r = (boost::gil::at_c<0>(*it));
             auto g = (boost::gil::at_c<1>(*it));
             auto b = (boost::gil::at_c<2>(*it));
-            auto el = new Element(r, g, b);
+            auto el = std::make_shared<Element>(r, g, b);
             _els.push_back(el);
 
             CoordT r_bucket = static_cast<CoordT>(std::floor(r / _dist));
@@ -46,13 +46,13 @@ void Processor::clusterize()
         auto neighbor_found = process_point(el);
         if (!neighbor_found) { continue; }
 
-        std::set<Element *> stack;
+        std::set<ElementPtrT> stack;
 
-        for (Element *limit_point : el->_cluster->get_limits()->all()) {
+        for (auto limit_point : el->_cluster->get_limits().all()) {
             stack.insert(limit_point);
         }
 
-        std::set<Element *> visited;
+        std::set<ElementPtrT> visited;
 
         while (!stack.empty()) {
             auto point = *stack.begin();
@@ -61,7 +61,7 @@ void Processor::clusterize()
             neighbor_found = process_point(point);
             if (!neighbor_found) { continue; }
 
-            for (auto limit_point : point->_cluster->get_limits()->all()) {
+            for (auto limit_point : point->_cluster->get_limits().all()) {
                 if (visited.find(limit_point) == visited.end()) {
                     stack.insert(limit_point);
                 }
@@ -72,7 +72,7 @@ void Processor::clusterize()
     save();
 }
 
-bool Processor::process_point(Element *el)
+bool Processor::process_point(ElementPtrT& el)
 {
     auto r_b = static_cast<CoordT>(std::floor(el->_r / _dist));
     auto r_b_from = r_b - 1;
@@ -144,10 +144,10 @@ bool Processor::process_point(Element *el)
     return neighbor_found;
 }
 
-Cluster* Processor::create_cluster(Element *el)
+ClusterPtrT Processor::create_cluster(ElementPtrT el)
 {
     ++_current_cluster_id;
-    Cluster *cluster = new Cluster(_current_cluster_id, el);
+    auto cluster = Cluster::create(_current_cluster_id, el);
     _clusters.insert(std::make_pair(_current_cluster_id, cluster));
 
     return cluster;
@@ -155,7 +155,7 @@ Cluster* Processor::create_cluster(Element *el)
 
 void Processor::save(const std::string& suffix)
 {
-    std::vector<Cluster*> sorted_clusters;
+    std::vector<ClusterPtrT> sorted_clusters;
     sorted_clusters.reserve(_clusters.size());
 
     std::transform(_clusters.begin(), _clusters.end(),
@@ -166,7 +166,7 @@ void Processor::save(const std::string& suffix)
 
     std::partial_sort(sorted_clusters.begin(), std::next(sorted_clusters.begin(), 3),
                       sorted_clusters.end(),
-                      [](Cluster *a, Cluster *b) {
+                      [](const ClusterPtrT& a, const ClusterPtrT& b) {
                           return a->size() > b->size();
                       });
 

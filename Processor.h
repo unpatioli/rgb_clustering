@@ -13,8 +13,8 @@ using image_t = boost::gil::rgb8_image_t;
 using view_t = boost::gil::rgb8_view_t;
 using pixel_t = boost::gil::rgb8_pixel_t;
 
-using ElementContT = std::vector<Element*>;
-using ClusterMapT = std::map<int, Cluster*>;
+using ElementContT = std::vector<ElementPtrT>;
+using ClusterMapT = std::map<int, ClusterPtrT>;
 
 class Cluster;
 
@@ -38,8 +38,8 @@ public:
     void clusterize();
 
 private:
-    bool process_point(Element *el);
-    Cluster* create_cluster(Element *el);
+    bool process_point(ElementPtrT& el);
+    ClusterPtrT create_cluster(ElementPtrT el);
     void save(const std::string& suffix = "_clusters.jpg");
 };
 

@@ -2,8 +2,9 @@
 #define RGB_CLUSTERING_ELEMENT_H
 
 #include <cmath>
+#include <memory>
 
-class Cluster;
+#include "Types.h"
 
 using CoordT = unsigned char;
 
@@ -11,7 +12,7 @@ struct Element
 {
     CoordT _r, _g, _b;
     int _cluster_id;
-    Cluster *_cluster;
+    ClusterPtrT _cluster;
 
     Element(CoordT r, CoordT g, CoordT b, int cluster_id = 0);
 

@@ -4,24 +4,26 @@
 #include <list>
 
 #include "Limits.h"
+#include "Types.h"
 
-class Element;
-
-class Cluster
+class Cluster : public std::enable_shared_from_this<Cluster>
 {
 private:
     int _id;
-    std::list<Element *> _els;
+    std::list<ElementPtrT> _els;
 
     Limits _limits;
 
+protected:
+    Cluster(int id, ElementPtrT first_el);
+
 public:
-    Cluster(int id, Element *first_el);
+    static ClusterPtrT create(int id, ElementPtrT first_el);
 
-    void add_element(Element *el);
-    void add_element(Cluster *cluster);
+    void add_element(ElementPtrT el);
+    void add_element(ClusterPtrT cluster);
 
-    const Limits* get_limits() const;
+    Limits get_limits() const;
     const size_t size() const;
     const int id() const;
 };

@@ -3,7 +3,7 @@
 #include "Element.h"
 #include "Cluster.h"
 
-void Limits::update(Element *el)
+void Limits::update(ElementPtrT el)
 {
     if (el->_r < min_r->_r) {
         min_r = el;
@@ -22,17 +22,17 @@ void Limits::update(Element *el)
     }
 }
 
-void Limits::update(const Cluster *cluster)
+void Limits::update(ClusterPtrT cluster)
 {
     auto new_limits = cluster->get_limits();
 
-    auto new_min_r = new_limits->min_r;
-    auto new_min_g = new_limits->min_g;
-    auto new_min_b = new_limits->min_b;
+    auto new_min_r = new_limits.min_r;
+    auto new_min_g = new_limits.min_g;
+    auto new_min_b = new_limits.min_b;
 
-    auto new_max_r = new_limits->max_r;
-    auto new_max_g = new_limits->max_g;
-    auto new_max_b = new_limits->max_b;
+    auto new_max_r = new_limits.max_r;
+    auto new_max_g = new_limits.max_g;
+    auto new_max_b = new_limits.max_b;
 
     if (new_min_r->_r < min_r->_r) {
         min_r = new_min_r;
@@ -51,9 +51,9 @@ void Limits::update(const Cluster *cluster)
     }
 }
 
-std::list<Element*> Limits::all() const
+std::list<ElementPtrT> Limits::all() const
 {
-    std::list<Element*> res;
+    std::list<ElementPtrT> res;
     res.push_back(min_r);
     res.push_back(min_g);
     res.push_back(min_b);
