@@ -14,8 +14,10 @@ private:
 
     Limits _limits;
 
-protected:
+private:
     Cluster(int id, ElementPtrT first_el);
+    Cluster(const Cluster&) = delete;
+    Cluster& operator= (const Cluster&) = delete;
 
 public:
     static ClusterPtrT create(int id, ElementPtrT first_el);

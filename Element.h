@@ -8,11 +8,13 @@
 
 struct Element
 {
-    CoordT _r, _g, _b;
+    const CoordT _r, _g, _b;
     int _cluster_id;
     ClusterPtrT _cluster;
 
     Element(CoordT r, CoordT g, CoordT b, int cluster_id = 0);
+    Element(const Element&) = delete;
+    Element& operator= (const Element&) = delete;
 
     DistT dist(const Element& rhs) const;
 };

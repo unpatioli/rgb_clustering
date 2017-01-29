@@ -34,6 +34,8 @@ class Processor
 
 public:
     Processor(const std::string& filename, DistT dist);
+    Processor(const Processor&) = delete;
+    Processor& operator= (const Processor&) = delete;
 
     void clusterize();
 
