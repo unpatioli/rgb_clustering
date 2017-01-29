@@ -6,8 +6,6 @@
 
 #include "Types.h"
 
-using CoordT = unsigned char;
-
 struct Element
 {
     CoordT _r, _g, _b;
@@ -16,7 +14,7 @@ struct Element
 
     Element(CoordT r, CoordT g, CoordT b, int cluster_id = 0);
 
-    double dist(const Element& rhs) const;
+    DistT dist(const Element& rhs) const;
 };
 
 

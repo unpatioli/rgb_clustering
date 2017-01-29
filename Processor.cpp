@@ -6,7 +6,7 @@
 
 #include "Cluster.h"
 
-Processor::Processor(const std::string& filename, float dist) :
+Processor::Processor(const std::string& filename, DistT dist) :
         _filename(filename), _dist(dist),
         _els(), _lattice(), _clusters(),
         _current_cluster_id(0)
@@ -178,7 +178,7 @@ void Processor::save(const std::string& suffix)
 
     std::random_device rnd_d;
     std::default_random_engine re(rnd_d());
-    std::uniform_int_distribution<unsigned char> uni_dist(0, 180);
+    std::uniform_int_distribution<CoordT> uni_dist(0, 180);
     for (; sc_it != sorted_clusters.end(); ++sc_it) {
         color_map[(*sc_it)->id()] = pixel_t(uni_dist(re), uni_dist(re), uni_dist(re));
     }

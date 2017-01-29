@@ -3,6 +3,9 @@
 
 #include <memory>
 
+using CoordT = unsigned char;
+using DistT = float;
+
 class Element;
 class Cluster;
 

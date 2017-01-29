@@ -5,7 +5,7 @@
 int main()
 {
     std::string filename;
-    float dist;
+    DistT dist;
 
     std::cout << "filename: ";
     std::cin >> filename;

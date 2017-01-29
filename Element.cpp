@@ -7,7 +7,8 @@ Element::Element(CoordT r, CoordT g, CoordT b, int cluster_id) :
         _cluster_id(cluster_id)
 {}
 
-double Element::dist(const Element& rhs) const
+DistT Element::dist(const Element& rhs) const
 {
-    return std::sqrt(std::pow(_r - rhs._r, 2) + std::pow(_g - rhs._g, 2) + std::pow(_b - rhs._b, 2));
+    auto res = std::sqrt(std::pow(_r - rhs._r, 2) + std::pow(_g - rhs._g, 2) + std::pow(_b - rhs._b, 2));
+    return static_cast<DistT>(res);
 }

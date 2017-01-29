@@ -21,7 +21,7 @@ class Cluster;
 class Processor
 {
     std::string _filename;
-    float _dist;
+    DistT _dist;
 
     image_t _img;
     view_t _view;
@@ -33,7 +33,7 @@ class Processor
     int _current_cluster_id;
 
 public:
-    Processor(const std::string& filename, float dist);
+    Processor(const std::string& filename, DistT dist);
 
     void clusterize();
 
